@@ -5,20 +5,23 @@
 #include "Wire.h"
 
 
-#define SPEED_OFFSET 20 // motors deadzone
-#define N_MEAS 100 // number of measurements for the accel/gyro offsets
-
+// motor
+#define SPEED_OFFSET 20 // deadzone
 #define PWM_FREQ 100 // frequency of motorshield, has to be low to prevent switching noise
 
+
+// acc/gyro 
+#define N_MEAS 100 // number of measurements for the accel/gyro offsets
 #define G_from_MPU 16383.0 // this is for fullscale of +-2g, we have 15 bits of value which is 32767 max, half that is 16383
 #define deg_from_MPU 131.1 // fullscale of +-250, 15 bits of value, 
 #define deg_per_lsb 0.007629f 
 
-#define LED_PIN 13
+// various
+#define LED_PIN 13 // debut
+
 
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-
 Adafruit_DCMotor *m1= AFMS.getMotor(1);
 Adafruit_DCMotor *m2 = AFMS.getMotor(2);
 
@@ -35,31 +38,31 @@ int16_t gx, gy, gz;
 int16_t ax_off, ay_off, az_off;
 int16_t gx_off, gy_off, gz_off; 
 
-float x,y,z, xx,yy,zz; // x y z, rx ry rz
 
+
+// State estimation
 int16_t ang; // angle from the horizontal plane
-
 float ang_f; // angle in float
 float acc_ang;  // angle from the accelerometer
 float gy_f; // ang vel from gyroscope
 float dt_f;
 
 
-// PID parameters
-float P = 28;
-float I = 0.01;
-float D = 18;
+// PID
+const float P = 28;
+const float I = 0.01;
+const float D = 18;
+const float targ_ang = -90; // stability angle
 
-// for PID
 float err;
 float prev_err;
 float d_err;
 float cum_err;
 
-
-float targ_ang = -90; // stability angle
 float cmd;
 
+
+// timing related
 unsigned long last_us;
 unsigned long us;
 unsigned long dt;
