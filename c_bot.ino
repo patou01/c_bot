@@ -213,7 +213,7 @@ void loop()
 
 
 
-// ************************************** begin angle estimation
+// ************************************** BEGIN ANGLE ESTIMATION
 
 
 void update_angle()
@@ -250,10 +250,10 @@ float integrate_f(float ang, float dt, float gy)
   return ang;
 }
 
-// ************************************** end angle estimation
+// ************************************** END ANGLE ESTIMATION
 
 
-// ************************************** begin control
+// ************************************** BEGIN CONTROL
 void compute_command()
 {
   err = targ_ang - ang_f;
@@ -263,9 +263,9 @@ void compute_command()
   cmd = P*err + I*cum_err + D*d_err;
 }
 
-// ************************************** end control
+// ************************************** END CONTROL
 
-// ************************************** begin motor
+// ************************************** BEGIN MOTOR
 void stop_motors()
 {
     m1->setSpeed(0);
@@ -291,12 +291,12 @@ void set_speed()
   m2->setSpeed(min(SPEED_OFFSET+abs(cmd), 255));
   
 }
-// ************************************** end motor
+// ************************************** END MOTOR
 
 
 
 
-// ************************************** begin not used anymore
+// ************************************** BEGIN UNUSED STUFF
 /*
 
 void print_values(int16_t ax, int16_t ay, int16_t az, int16_t gx, int16_t gy, int16_t gz)
