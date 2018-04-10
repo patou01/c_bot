@@ -20,7 +20,7 @@
 #define LED_PIN 13 // debut
 
 
-
+// motors
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_DCMotor *m1= AFMS.getMotor(1);
 Adafruit_DCMotor *m2 = AFMS.getMotor(2);
@@ -73,15 +73,13 @@ unsigned long last_speed_ms;
 
 bool blinkState = false;
 
-void setup() {
+void setup() 
+{
     Wire.begin();
     Serial.begin(115200);
 
-//    Serial.println("Initializing I2C devices...");
     accelgyro.initialize();
     accelgyro.setDLPFMode(MPU6050_DLPF_BW_188); 
-//    Serial.println("Testing device connections...");
-//    Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
 
     // initialize
     accelgyro.setXAccelOffset(0);
@@ -103,7 +101,7 @@ void setup() {
     long int g1_off = 0;
     long int g2_off = 0;
 
-    // large sum
+    // sum N measurements
     for(int i = 0; i < N_MEAS; i++)
     {
       delay(50);
@@ -134,13 +132,12 @@ void setup() {
 
 
     // start motorshield
-    AFMS.begin(PWM_FREQ);
-    
-      
+    AFMS.begin(PWM_FREQ);    
 }
 
 
-void loop() {
+void loop() 
+{
     update_angle();     
 
     // safety, if we are beyond saving just drop dead
@@ -161,8 +158,6 @@ void loop() {
       }
     }
    
-
-    
 
     // blink LED to indicate activity
     blinkState = !blinkState;
@@ -297,9 +292,6 @@ void set_speed()
   
 }
 // ************************************** end motor
-
-
-
 
 
 
